@@ -26,12 +26,12 @@ public class BaseTests {
 	
 	// base_url that is set from properties file
 	protected String url;
-	protected String inventory_ext;
-	protected String product_ext;
-	protected String cart_ext;
-	protected String checkout_one_ext;
-	protected String checkout_two_ext;
-	protected String checkout_complete_ext;
+	protected String inventory_ext = "/inventory.html";
+	protected String product_ext = "/inventory-item.html?id=";
+	protected String cart_ext = "/cart.html";
+	protected String checkout_one_ext = "/checkout-step-one.html";
+	protected String checkout_two_ext = "/checkout-step-two.html";
+	protected String checkout_complete_ext = "/checkout-complete.html";
 	
 	// default url if none given
 	protected final String DEFAULT_URL = "https://www.saucedemo.com";
@@ -90,26 +90,6 @@ public class BaseTests {
 			url = DEFAULT_URL;
 		} else {
 			System.out.println("Using url: " + url);
-		}
-		
-
-		
-		// set all url extensions from property and ensure provided
-		try {
-			inventory_ext = properties.getProperty("inventory_ext");
-			product_ext = properties.getProperty("product_ext");
-			cart_ext = properties.getProperty("cart_ext");
-			checkout_one_ext = properties.getProperty("checkout_one_ext");
-			checkout_two_ext = properties.getProperty("checkout_two_ext");
-			checkout_complete_ext = properties.getProperty("checkout_complete_ext");
-			if(inventory_ext == null || product_ext == null || cart_ext == null || checkout_one_ext == null
-					|| checkout_two_ext == null || 	checkout_complete_ext == null) {
-				throw new IOException("Please set all page extensions for testing.");
-			}
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-			return;
 		}
 		
 		
