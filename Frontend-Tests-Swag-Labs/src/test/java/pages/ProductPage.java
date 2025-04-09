@@ -14,6 +14,8 @@ public class ProductPage {
 	protected By cartBadgeBy = By.className("shopping_cart_badge");
 	protected By cartLinkBy = By.className("shopping_cart_link");
 	protected By productNameBy = By.className("inventory_details_name");
+	protected By inventoryDescBy = By.className("inventory_details_desc");
+	private final String RENDER_ERROR_MESSAGE = "A description should be here, but it failed to render!";
 	
 	public ProductPage(WebDriver driver) {
 		this.driver = driver;
@@ -67,6 +69,10 @@ public class ProductPage {
 		WebElement productName = driver.findElement(productNameBy);
 		
 		return product.equalsIgnoreCase(productName.getText().replaceAll("-", " "));
+	}
+	
+	public boolean isDescriptionRenderError() {
+		return driver.findElement(inventoryDescBy).getText().contains(RENDER_ERROR_MESSAGE);
 	}
 	
 }

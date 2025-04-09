@@ -183,6 +183,18 @@ public class InventoryTests extends BaseTests {
 		}
 	}
 	
+	@Test(description = "Verify about page button works.",
+			enabled=true)
+	public void userCanGoToAboutPage() {
+		driver.get(url);
+		loginPage.login(username, password, true);
+		inventoryPage.clickAboutPage();
+		String expectedUrl="https://saucelabs.com/";
+		String actualUrl=driver.getCurrentUrl();
+		Assert.assertTrue(actualUrl.contains(expectedUrl));
+		
+	}
+	
 	
 	
 }

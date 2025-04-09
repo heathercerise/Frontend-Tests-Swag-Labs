@@ -24,6 +24,7 @@ public class CartTests extends BaseTests {
 	public CartTests() {
 		this.username = DEFAULT_USERNAME;
 		this.password= DEFAULT_PASSWORD;
+
 	}
 
 	// Before implementing tests, logs in the user
@@ -123,6 +124,26 @@ public class CartTests extends BaseTests {
 		}
 	}
 	
+	// Check cart is displaying correctly with the right items after adding from product page
+	@Test(description = "Cart shows item after adding from product page",
+			dataProvider = "supportedProducts")
+	public void productPageAddDisplaysInCart(String[] products) {
+		for(int i = 0; i < products.length; ++i) {
+			if(i % 3 == 0) {
+				inventoryPage.resetAppState();
+				driver.get(url + inventory_ext);
+				
+				inventoryPage.clickOnProductName(products[i]);
+				productPage.clickAddButton();
+				productPage.clickOnCart();
+				Assert.assertTrue(cartPage.verifyItemInCart(products[i]));
+				cartPage.clickContinueShopping();
+			}
+			
+		}
+		
+	}
+	
 	// Clicking on product name goes to correct product page
 	@Test(description = "Verify can go to product page by clicking on name.",
 			dataProvider = "supportedProducts")
@@ -181,5 +202,19 @@ public class CartTests extends BaseTests {
 		inventoryPage.resetAppState();
 	}
 	
+	
+	// Clicking on All Items in Nav Bar navigates to inventory page
+	@Test(description = "Verify can go to inventory page from nav bar all items button.",
+			dataProvider = "supportedProducts")
+	public void goToInventoryWithNavBar(String[] products) {
+		
+		inventoryPage.clickOnCart();
+		cartPage.clickOnInventoryPageFromNavBar();
+		String expectedUrl = url + inventory_ext;
+		String actualUrl = driver.getCurrentUrl();
+		Assert.assertEquals(actualUrl,  expectedUrl);
+	
+		
+	}
 	
 }

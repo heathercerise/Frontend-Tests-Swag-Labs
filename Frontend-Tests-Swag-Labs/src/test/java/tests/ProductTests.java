@@ -149,4 +149,15 @@ public class ProductTests extends BaseTests {
 	}
 	
 	
+	
+	@Test(description = "Description should render",
+			dataProvider = "supportedProducts")
+	public void descriptionIsRendering(String[] products) {
+		for(int i = 0; i < products.length; ++i) {
+			inventoryPage.clickOnProductName(products[i]);
+			Assert.assertFalse(productPage.isDescriptionRenderError());
+		}
+		
+	}
+	
 }

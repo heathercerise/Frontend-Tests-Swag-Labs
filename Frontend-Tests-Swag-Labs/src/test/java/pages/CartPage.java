@@ -12,6 +12,8 @@ public class CartPage {
 	protected By continueShoppingBy = By.id("continue-shopping");
 	protected By checkoutBy = By.id("checkout");
 	protected By inventoryNameBy = By.className("inventory_item_name");
+	protected By burgerMenuBy = By.id("react-burger-menu-btn");
+	protected By inventoryNavBarBy = By.id("inventory_sidebar_link");
 	
 	public CartPage(WebDriver driver) {
 		this.driver = driver;
@@ -93,6 +95,11 @@ public class CartPage {
 		return false;
 	}
 	
+	public void clickOnInventoryPageFromNavBar() {
+		driver.findElement(burgerMenuBy).click();
+		WebElement resetApp = driver.findElement(inventoryNavBarBy);
+		resetApp.click();
+	}
 	
 	
 

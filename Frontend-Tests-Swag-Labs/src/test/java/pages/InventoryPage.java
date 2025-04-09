@@ -22,6 +22,7 @@ public class InventoryPage {
 	protected By burgerMenuBy = By.id("react-burger-menu-btn");
 	protected By resetLinkBy = By.id("reset_sidebar_link");
 	protected By logoutLinkBy = By.id("logout_sidebar_link");
+	protected By aboutPageLinkBy = By.id("about_sidebar_link");
 	
 	public InventoryPage(WebDriver driver) {
 		this.driver = driver;
@@ -180,6 +181,13 @@ public class InventoryPage {
 	public void clickLogout() {
 		driver.findElement(burgerMenuBy).click();
 		WebElement resetApp = driver.findElement(logoutLinkBy);
+		resetApp.click();
+		
+	}
+	
+	public void clickAboutPage() {
+		driver.findElement(burgerMenuBy).click();
+		WebElement resetApp = driver.findElement(aboutPageLinkBy);
 		resetApp.click();
 		
 	}
