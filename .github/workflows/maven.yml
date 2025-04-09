@@ -20,4 +20,6 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Run tests
-      run: mvn test
+      run: |
+        cd Frontend-Tests-Swag-Labs
+        mvn test
