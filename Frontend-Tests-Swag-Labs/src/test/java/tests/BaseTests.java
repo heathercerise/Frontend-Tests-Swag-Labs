@@ -109,12 +109,11 @@ public class BaseTests {
 			chromePrefs.put("profile.password_manager_leak_detection", false);
 			chromePrefs.put("credentials_enable_service", false);
 			chromePrefs.put("profile.password_manager_enabled", false);
-			chromePrefs.put("headless", true);
 			
 
-			final ChromeOptions chromeOptions = new ChromeOptions();
+			ChromeOptions chromeOptions = new ChromeOptions();
 			chromeOptions.setExperimentalOption("prefs", chromePrefs);
-			
+			chromeOptions.addArguments("--headless=new");
 			driver = new ChromeDriver(chromeOptions);
 		} else if (browser.equalsIgnoreCase("firefox")) {
 			driver = new FirefoxDriver();
