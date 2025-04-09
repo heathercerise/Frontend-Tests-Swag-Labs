@@ -67,7 +67,7 @@ public class InventoryTests extends BaseTests {
 			dataProvider = "supportedProducts",
 			enabled=true)
 	public void inventoryProductPageOnClick(String[] products) {
-		
+		// go through products, click on them and verify you're on the right page
 		for(int i = 0; i < products.length; ++i) {
 			inventoryPage.clickOnProductName(products[i]);
 			
@@ -88,7 +88,6 @@ public class InventoryTests extends BaseTests {
 			dataProvider = "supportedSortingValues",
 			enabled=true)
 	public void inventorySort(String sortValue) {
-		System.out.println("Running with user: " + username);
 		Boolean result = inventoryPage.sortProductsByValue(sortValue);
 		Assert.assertTrue(result);
 	}
@@ -98,7 +97,7 @@ public class InventoryTests extends BaseTests {
 			dataProvider = "supportedProducts",
 			enabled=true)
 	public void addItemsToCart(String[] products) {
-		
+		// add each supported product to cart and check if displays correctly
 		for(int i = 0; i < products.length; ++i) {
 			inventoryPage.addProductToCart(products[i]);
 			Assert.assertTrue(inventoryPage.getRemoveFromCart(products[i]).isDisplayed());
@@ -112,9 +111,8 @@ public class InventoryTests extends BaseTests {
 			dataProvider = "supportedProducts",
 			enabled=true)
 	public void removeItemsFromCart(String[] products) {
-		
+		// add each item to cart and then try to remove them and see if page updates correctly
 		for(int i = 0; i < products.length; ++i) {
-			//Assert.assertTrue(inventoryPage.getAddToCart(products[i]).isDisplayed());
 			inventoryPage.addProductToCart(products[i]);
 		}
 		
@@ -165,6 +163,7 @@ public class InventoryTests extends BaseTests {
 		inventoryPage.resetAppState();
 		driver.get(url + inventory_ext);
 		
+		// add every other product, logout, then log back in and see if same products displayed correctly
 		for(int i = 0; i < products.length; ++i) {
 			if(i % 2 == 0) {
 				inventoryPage.addProductToCart(products[i]);

@@ -61,6 +61,7 @@ public class ProductPage {
 		}
 	}
 
+	// get product page title and see if matches expected
 	public boolean validateCorrectItem(String product) {
 		product = product.replaceAll("-", " ");
 		WebElement productName = driver.findElement(productNameBy);

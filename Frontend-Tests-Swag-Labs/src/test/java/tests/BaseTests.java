@@ -86,6 +86,7 @@ public class BaseTests {
 	@BeforeClass
 	public void driverSetUp() throws Exception {
 		
+		// Set the environment url from properties file, otherwise use default
 		properties = PropertiesFile.getProperties("config");
 		url = properties.getProperty("base_url");
 		if (url == null) {
@@ -116,6 +117,7 @@ public class BaseTests {
 		} else if (browser.equalsIgnoreCase("firefox")) {
 			driver = new FirefoxDriver();
 		} else if (browser.equalsIgnoreCase("Edge")) {
+			// Edge was failing to start and found this workaround
 			 EdgeOptions options = new EdgeOptions();
 			 options.addArguments("--edge-skip-compat-layer-relaunch");
 			 

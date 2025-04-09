@@ -80,6 +80,7 @@ public class CartPage {
 	
 
 	public boolean verifyItemInOrder(String productName, int index) {
+		// get all products and see if the index is correct aka order maintained
 		productName = productName.replaceAll("-", " ");
 		
 		List<WebElement> items = getItemsInCart();

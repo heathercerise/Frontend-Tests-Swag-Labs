@@ -31,11 +31,11 @@ public class ProductTests extends BaseTests {
 		driver.get(url);
 		loginPage = new LoginPage(driver);
 		cartPage = new CartPage(driver);
+		inventoryPage = new InventoryPage(driver);
+		productPage = new ProductPage(driver);
 		
 		// log in a user
 		loginPage.login(username, password, true);
-		inventoryPage = new InventoryPage(driver);
-		productPage = new ProductPage(driver);
 	}
 	
 	@BeforeMethod()

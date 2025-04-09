@@ -34,6 +34,7 @@ public class LoginTests extends BaseTests{
 	@Test(description = "Verify user can login with correct credentials and button click.",
 			dataProvider = "validCredentials")
 	public void loginValidUserClick(String username, String password) {
+		// login with correct credentials and press button
 		loginPage.login(username, password, true);
 		
 		String expectedUrl=url+inventory_ext;
@@ -45,6 +46,7 @@ public class LoginTests extends BaseTests{
 	@Test(description = "Verify user can login with correct credentials and enter button.",
 			dataProvider = "validCredentials")
 	public void loginValidUserEnter(String username, String password) {
+		// login with correct credentials and press the enter key
 		loginPage.login(username, password, false);
 		
 		String expectedUrl=url+inventory_ext;
@@ -56,8 +58,8 @@ public class LoginTests extends BaseTests{
 	
 	@Test(description = "Verify user prompted to add a username.")
 	public void loginNoUsername() {
+		// login with no username set and check error message
 		loginPage.login(null, FAKE_PASSWORD, true);
-		
 		String error = loginPage.getErrorMessage();
 		
 		Assert.assertEquals(error, MUST_HAVE_USERNAME_MESSAGE);
@@ -67,8 +69,8 @@ public class LoginTests extends BaseTests{
 	@Test(description = "Verify user prompted to add a password.",
 			dataProvider = "validCredentials")
 	public void loginNoPassword(String username, String password) {
+		// login with no password set and check error message
 		loginPage.login(username, null, true);
-		
 		String error = loginPage.getErrorMessage();
 		
 		Assert.assertEquals(error, MUST_HAVE_PASSWORD_MESSAGE);
@@ -77,8 +79,8 @@ public class LoginTests extends BaseTests{
 	
 	@Test(description = "Verify user can't login with unregistered username.")
 	public void loginWrongUsername() {
+		// log in with wrong username and password and check error message
 		loginPage.login(FAKE_USERNAME, FAKE_PASSWORD, true);
-		
 		String error = loginPage.getErrorMessage();
 		
 		Assert.assertEquals(error, USER_DOES_NOT_EXIST_MESSAGE);
@@ -88,8 +90,8 @@ public class LoginTests extends BaseTests{
 	@Test(description = "Verify user can't login with incorrect password.",
 			dataProvider = "validCredentials")
 	public void loginWrongPassword(String username, String password) {
+		// login with wrong password and check error message
 		loginPage.login(username, FAKE_PASSWORD, true);
-		
 		String error = loginPage.getErrorMessage();
 		
 		Assert.assertEquals(error, USER_DOES_NOT_EXIST_MESSAGE);
@@ -99,8 +101,8 @@ public class LoginTests extends BaseTests{
 	
 	@Test(description = "Locked out user cannot login and displays error.")
 	public void loginLockedOut() {
+		// log in with locked out user and compare error message
 		loginPage.login(LOCKED_OUT_USERNAME, LOCKED_OUT_PASSWORD, true);
-		
 		String error = loginPage.getErrorMessage();
 		
 		Assert.assertEquals(error, LOCKED_OUT_MESSAGE);
@@ -109,6 +111,7 @@ public class LoginTests extends BaseTests{
 	
 	@Test(description = "Can remove error message after displayed.")
 	public void removeErrorMessage() {
+		// Login with locked out user, click on error message X and see if disappears
 		loginPage.login(LOCKED_OUT_USERNAME, LOCKED_OUT_PASSWORD, true);
 		loginPage.clickErrorButton();
 		String error = loginPage.getErrorMessage();
