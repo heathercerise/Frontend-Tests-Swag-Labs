@@ -2,6 +2,9 @@ package tests;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -14,7 +17,6 @@ import pages.InventoryPage;
 import pages.LoginPage;
 import pages.ProductPage;
 
-import java.io.IOException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +37,7 @@ public class BaseTests {
 	
 	// default url if none given
 	protected final String DEFAULT_URL = "https://www.saucedemo.com";
+	protected final String DEFAULT_BROWSER = "chrome";
 	
 	// default first, last, zip
 	protected final String FAKE_FIRST_NAME = "Sally";
@@ -81,11 +84,11 @@ public class BaseTests {
 	
 
 	@BeforeClass
-	public void driverSetUp() throws IOException {
+	public void driverSetUp() throws Exception {
 		
 		properties = PropertiesFile.getProperties("config");
 		url = properties.getProperty("base_url");
-		if(url == null) {
+		if (url == null) {
 			System.out.println("Using default url: " + url);
 			url = DEFAULT_URL;
 		} else {
@@ -93,21 +96,41 @@ public class BaseTests {
 		}
 		
 		
-		// Chrome password pop ups are creating failures so change settings
-		final Map<String, Object> chromePrefs = new HashMap<>();
-		chromePrefs.put("profile.password_manager_leak_detection", false);
-		chromePrefs.put("credentials_enable_service", false);
-		chromePrefs.put("profile.password_manager_enabled", false);
+		// set which browser we are testing with
+		String browser = properties.getProperty("browser");
+		if(browser == null) {
+			System.out.println("Using default browser");
+			browser = DEFAULT_BROWSER;
+		}
+		if (browser.equalsIgnoreCase("chrome")) {
+			// Chrome password pop ups are creating failures so change settings
+			final Map<String, Object> chromePrefs = new HashMap<>();
+			chromePrefs.put("profile.password_manager_leak_detection", false);
+			chromePrefs.put("credentials_enable_service", false);
+			chromePrefs.put("profile.password_manager_enabled", false);
 
-		final ChromeOptions chromeOptions = new ChromeOptions();
-		chromeOptions.setExperimentalOption("prefs", chromePrefs);
-		
-		driver = new ChromeDriver(chromeOptions);
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+			final ChromeOptions chromeOptions = new ChromeOptions();
+			chromeOptions.setExperimentalOption("prefs", chromePrefs);
+			
+			driver = new ChromeDriver(chromeOptions);
+		} else if (browser.equalsIgnoreCase("firefox")) {
+			driver = new FirefoxDriver();
+		} else if (browser.equalsIgnoreCase("Edge")) {
+			 EdgeOptions options = new EdgeOptions();
+			 options.addArguments("--edge-skip-compat-layer-relaunch");
+			 
+			driver = new EdgeDriver(options);
+		} else {
+			System.out.println("Exception thrown.");
+			throw new Exception("No or unrecognized browser specified.");
+			
+		}
+		System.out.println("Using browser: " + browser);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 		
 		// navigate to our URL
 		driver.get(url);
-		driver.manage().window().maximize();
+		driver.manage().window().maximize(); // easier to see what's going on in tests
 	}
 	
 	@AfterClass

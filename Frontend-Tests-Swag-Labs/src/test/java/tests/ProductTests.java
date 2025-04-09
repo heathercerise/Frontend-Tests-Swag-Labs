@@ -49,7 +49,7 @@ public class ProductTests extends BaseTests {
 	public void userCanNavigateBackToInventory(String[] products) {
 		for(int i = 0; i < products.length; ++i) {
 			// navigate to each product and go back
-			inventoryPage.clickProductName(i);
+			inventoryPage.clickOnProductName(products[i]);
 			productPage.backToProductsButton();
 			String expectedUrl = url + inventory_ext;
 			String actualUrl = driver.getCurrentUrl();
@@ -65,7 +65,7 @@ public class ProductTests extends BaseTests {
 	public void userCanAddToCart(String[] products) {
 		for(int i = 0; i < products.length; ++i) {
 			// navigate to each product and add it
-			inventoryPage.clickProductName(i);
+			inventoryPage.clickOnProductName(products[i]);
 			Assert.assertTrue(productPage.getAddToCartButton().isDisplayed());
 			productPage.clickAddButton();
 			Assert.assertEquals(productPage.numberOfItemsInCart(), i+1);
@@ -84,20 +84,20 @@ public class ProductTests extends BaseTests {
 	public void productDisplaysIfAdded(String[] products) {
 		for(int i = 0; i < products.length; ++i) {
 			// navigate to each product and add it
-			inventoryPage.clickProductName(i);
+			inventoryPage.clickOnProductName(products[i]);
 			productPage.clickAddButton();
 			
 			// navigate back to inventory
 			productPage.backToProductsButton();
 			
 			// go back to product page and check if displayed as added already
-			inventoryPage.clickProductName(i);
+			inventoryPage.clickOnProductName(products[i]);
 			Assert.assertTrue(productPage.getRemoveButton().isDisplayed());
 			
 			// now remove it, go back to inventory, and navigate back to see if displayed as removed
 			productPage.clickRemoveButton();
 			productPage.backToProductsButton();
-			inventoryPage.clickProductName(i);
+			inventoryPage.clickOnProductName(products[i]);
 			Assert.assertTrue(productPage.getAddToCartButton().isDisplayed());
 			productPage.backToProductsButton();
 			
@@ -114,7 +114,7 @@ public class ProductTests extends BaseTests {
 		// add all the items first
 		for(int i = 0; i < products.length; ++i) {
 			// navigate to each product and add it
-			inventoryPage.clickProductName(i);
+			inventoryPage.clickOnProductName(products[i]);
 			productPage.clickAddButton();
 			// navigate back to inventory page
 			productPage.backToProductsButton();
@@ -123,7 +123,7 @@ public class ProductTests extends BaseTests {
 		// remove all the items
 		for(int i = products.length - 1; i >= 0; --i) {
 			// navigate to each product and remove it
-			inventoryPage.clickProductName(i);
+			inventoryPage.clickOnProductName(products[i]);
 			Assert.assertTrue(productPage.getRemoveButton().isDisplayed());
 			productPage.clickRemoveButton();
 			Assert.assertEquals(productPage.numberOfItemsInCart(), i);
@@ -138,7 +138,7 @@ public class ProductTests extends BaseTests {
 			dataProvider = "supportedProducts")
 	public void canGoToCart(String[] products) {
 		for(int i = 0; i < products.length; ++i) {
-			inventoryPage.clickProductName(i);
+			inventoryPage.clickOnProductName(products[i]);
 			productPage.clickOnCart();
 			String expectedUrl=url+cart_ext;
 			String actualUrl=driver.getCurrentUrl();

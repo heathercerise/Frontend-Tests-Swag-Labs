@@ -69,10 +69,14 @@ public class InventoryTests extends BaseTests {
 	public void inventoryProductPageOnClick(String[] products) {
 		
 		for(int i = 0; i < products.length; ++i) {
-			inventoryPage.clickProductName(i);
-			String expectedUrl=url+product_ext + String.valueOf(i);
+			inventoryPage.clickOnProductName(products[i]);
+			
+			Assert.assertTrue(productPage.validateCorrectItem(products[i]));
+			
+			
+			String expectedUrl=url+product_ext;
 			String actualUrl=driver.getCurrentUrl();
-			Assert.assertEquals(actualUrl, expectedUrl);
+			Assert.assertTrue(actualUrl.contains(expectedUrl));
 			
 			productPage.backToProductsButton();
 		}

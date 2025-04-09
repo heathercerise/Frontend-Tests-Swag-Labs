@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -154,11 +155,27 @@ public class InventoryPage {
 		driver.findElement(cartLinkBy).click();
 	}
 	 
-	
+	/*
 	// go to product page if click on name
 	public void clickProductName(int index) {
 		WebElement productName = driver.findElement(By.id("item_" + String.valueOf(index) + "_title_link"));
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView();", productName);
 		productName.click();
+	}
+	*/
+	
+	// Click on product name
+	public void clickOnProductName(String productName) {
+		productName = productName.replaceAll("-", " ");
+		List<WebElement> items = driver.findElements(inventoryItemsBy);
+		for(WebElement item : items) {
+			if(productName.equalsIgnoreCase(item.getText().replaceAll("-", " "))){
+				item.click();
+				return;
+			}
+		}
+		
 	}
 	
 	// reset app state

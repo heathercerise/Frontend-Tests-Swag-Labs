@@ -64,7 +64,8 @@ public class ProductPage {
 	public boolean validateCorrectItem(String product) {
 		product = product.replaceAll("-", " ");
 		WebElement productName = driver.findElement(productNameBy);
-		return product.equalsIgnoreCase(productName.getText());
+		
+		return product.equalsIgnoreCase(productName.getText().replaceAll("-", " "));
 	}
 	
 }
